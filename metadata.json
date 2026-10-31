@@ -1,0 +1,6 @@
+{
+  "name": "Debidwar Medilab Hospital",
+  "description": "Debidwar Medilab Hospital - Multi-page bilingual healthcare website in Debidwar, Cumilla, Bangladesh with 24/7 emergency care, specialist doctors, diagnostic lab, and online appointment booking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
