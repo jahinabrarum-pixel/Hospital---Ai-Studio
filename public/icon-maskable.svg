@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#142B45"/>
+      <stop offset="50%" stop-color="#1769D2"/>
+      <stop offset="100%" stop-color="#0E9F92"/>
+    </linearGradient>
+  </defs>
+  <!-- Full bleed background for Android squircle / circle mask -->
+  <rect width="512" height="512" fill="url(#bgGradMask)"/>
+  
+  <!-- Safe zone scaled to 76% in center -->
+  <g transform="translate(61.44, 61.44) scale(0.76)">
+    <circle cx="256" cy="256" r="210" fill="none" stroke="#ffffff" stroke-width="6" stroke-opacity="0.25"/>
+    <rect x="216" y="112" width="80" height="288" rx="20" fill="#ffffff"/>
+    <rect x="112" y="216" width="288" height="80" rx="20" fill="#ffffff"/>
+    <rect x="230" y="130" width="52" height="252" rx="12" fill="#E11D48"/>
+    <rect x="130" y="230" width="252" height="52" rx="12" fill="#E11D48"/>
+    <path d="M 150 256 L 200 256 L 222 205 L 246 305 L 268 220 L 286 275 L 306 256 L 362 256" 
+          fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="160" y="420" width="192" height="46" rx="23" fill="#142B45"/>
+    <text x="256" y="451" font-family="DejaVu Sans, Arial, sans-serif" font-weight="900" font-size="22" fill="#38BDF8" text-anchor="middle" letter-spacing="2">MEDILAB</text>
+  </g>
+</svg>

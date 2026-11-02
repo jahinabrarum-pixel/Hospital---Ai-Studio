@@ -239,3 +239,20 @@ export function performGlobalSearch(
 
   return results.slice(0, 10);
 }
+
+/**
+ * Helper to compute the opposite theme for toggling
+ */
+export function getOppositeTheme(current: 'light' | 'dark'): 'light' | 'dark' {
+  return current === 'light' ? 'dark' : 'light';
+}
+
+/**
+ * Returns human-readable theme label in English or Bengali
+ */
+export function getThemeLabel(theme: 'light' | 'dark', lang: 'en' | 'bn' = 'en'): string {
+  if (lang === 'bn') {
+    return theme === 'dark' ? 'হাই-কন্ট্রাস্ট ডার্ক মোড' : 'স্ট্যান্ডার্ড লাইট মোড';
+  }
+  return theme === 'dark' ? 'High-Contrast Dark Mode' : 'Standard Light Mode';
+}

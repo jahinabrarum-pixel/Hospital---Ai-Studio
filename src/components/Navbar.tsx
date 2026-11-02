@@ -12,13 +12,17 @@ import {
   Activity, 
   HeartPulse, 
   Ambulance, 
-  Globe 
+  Globe,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { 
     language, 
     toggleLanguage, 
+    theme,
+    toggleTheme,
     t, 
     currentPage, 
     navigateTo, 
@@ -262,6 +266,20 @@ export const Navbar: React.FC = () => {
               <span className={language === 'bn' ? 'text-[#1769D2] font-bold font-bangla' : 'text-slate-400 font-bangla'}>বাং</span>
             </button>
 
+            {/* Theme Toggle Button (Light / High-Contrast Dark) */}
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 sm:p-2 text-slate-600 hover:text-[#1769D2] hover:bg-blue-50 rounded-lg transition-all cursor-pointer"
+              title={theme === 'dark' ? (language === 'bn' ? 'লাইট মোড চালু করুন' : 'Switch to Light Mode') : (language === 'bn' ? 'হাই-কন্ট্রাস্ট ডার্ক মোড চালু করুন' : 'Switch to High-Contrast Dark Mode')}
+              aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 hover:rotate-45 transition-transform duration-300" />
+              ) : (
+                <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 hover:-rotate-12 transition-transform duration-300" />
+              )}
+            </button>
+
             {/* Book Appointment CTA */}
             <button
               onClick={() => openAppointmentModal()}
@@ -285,15 +303,47 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="xl:hidden fixed inset-x-0 top-[65px] bottom-0 bg-white/95 backdrop-blur-md z-50 border-t border-slate-200 overflow-y-auto px-4 py-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200">
+        <div className={`xl:hidden fixed inset-x-0 top-[65px] bottom-0 ${
+          theme === 'dark' ? 'bg-[#0E172C] text-slate-100 border-[#243552]' : 'bg-white text-slate-800 border-slate-200'
+        } z-50 border-t overflow-y-auto px-4 py-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 duration-200`}>
           
-          {/* Emergency Hotline Banner for Mobile */}
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center justify-between">
-            <div className="flex items-center gap-2 text-rose-700">
-              <Ambulance className="w-5 h-5 text-rose-600 animate-pulse" />
+          {/* Theme Toggle Card for Mobile */}
+          <div className={`p-3 rounded-xl border flex items-center justify-between ${
+            theme === 'dark' ? 'bg-[#142036] border-[#243552]' : 'bg-slate-50 border-slate-200'
+          }`}>
+            <div className="flex items-center gap-2.5">
+              <div className={`p-2 rounded-lg ${theme === 'dark' ? 'bg-amber-400/20 text-amber-400' : 'bg-blue-100 text-[#1769D2]'}`}>
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </div>
               <div>
-                <p className="text-xs font-semibold">{language === 'bn' ? '২৪ ঘণ্টা জরুরি সেবা' : '24/7 Emergency Care'}</p>
-                <p className="text-sm font-bold">{hospitalInfo.emergencyPhoneEn}</p>
+                <p className={`text-xs font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>
+                  {language === 'bn' ? 'ওয়েবসাইট থিম' : 'Website Theme'}
+                </p>
+                <p className={`text-[11px] ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
+                  {theme === 'dark' 
+                    ? (language === 'bn' ? 'হাই-কন্ট্রাস্ট ডার্ক মোড' : 'High-Contrast Dark Mode')
+                    : (language === 'bn' ? 'স্ট্যান্ডার্ড লাইট মোড' : 'Standard Light Mode')
+                  }
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={toggleTheme}
+              className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-[#1769D2] hover:bg-blue-700 text-white cursor-pointer shadow-xs"
+            >
+              {theme === 'dark' ? (language === 'bn' ? 'লাইট মোড' : 'Light Mode') : (language === 'bn' ? 'ডার্ক মোড' : 'Dark Mode')}
+            </button>
+          </div>
+
+          {/* Emergency Hotline Banner for Mobile */}
+          <div className={`p-3 rounded-xl border flex items-center justify-between ${
+            theme === 'dark' ? 'bg-[#331A27] border-[#4C2336]' : 'bg-rose-50 border-rose-200'
+          }`}>
+            <div className="flex items-center gap-2 text-rose-500">
+              <Ambulance className="w-5 h-5 text-rose-500 animate-pulse" />
+              <div>
+                <p className="text-xs font-semibold text-rose-400">{language === 'bn' ? '২৪ ঘণ্টা জরুরি সেবা' : '24/7 Emergency Care'}</p>
+                <p className="text-sm font-bold text-white">{hospitalInfo.emergencyPhoneEn}</p>
               </div>
             </div>
             <a 
@@ -311,52 +361,58 @@ export const Navbar: React.FC = () => {
               setIsMobileMenuOpen(false);
               openAppointmentModal();
             }}
-            className="w-full flex items-center justify-center gap-2 bg-[#1769D2] text-white text-sm font-semibold py-3 rounded-xl shadow-md cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 bg-[#1769D2] hover:bg-blue-600 text-white text-sm font-semibold py-3 rounded-xl shadow-md cursor-pointer"
           >
             <Calendar className="w-4 h-4" />
             <span>{t.bookAppointment}</span>
           </button>
 
           {/* Mobile Nav Links List */}
-          <div className="grid grid-cols-1 divide-y divide-slate-100">
+          <div className={`grid grid-cols-1 divide-y ${theme === 'dark' ? 'divide-[#243552]' : 'divide-slate-100'}`}>
             {navItems.map((item) => (
               <button
                 key={item.page}
                 onClick={() => handleNavClick(item.page)}
                 className={`w-full text-left py-3 px-2 text-sm font-medium flex items-center justify-between transition-colors ${
                   currentPage === item.page
-                    ? 'text-[#1769D2] font-bold bg-blue-50/50 rounded-lg'
+                    ? theme === 'dark' ? 'text-blue-400 font-bold bg-[#142036] rounded-lg' : 'text-[#1769D2] font-bold bg-blue-50/50 rounded-lg'
                     : item.isEmergency 
-                      ? 'text-rose-600 font-semibold'
-                      : 'text-slate-700 hover:text-[#1769D2]'
+                      ? 'text-rose-500 font-semibold'
+                      : theme === 'dark' ? 'text-slate-200 hover:text-blue-400' : 'text-slate-700 hover:text-[#1769D2]'
                 }`}
               >
                 <span>{item.label}</span>
-                <span className="text-slate-400 text-xs">→</span>
+                <span className={theme === 'dark' ? 'text-slate-500 text-xs' : 'text-slate-400 text-xs'}>→</span>
               </button>
             ))}
             
             {/* Additional Secondary Links */}
             <button
               onClick={() => handleNavClick('careers')}
-              className="w-full text-left py-3 px-2 text-sm text-slate-600 hover:text-[#1769D2] flex justify-between"
+              className={`w-full text-left py-3 px-2 text-sm flex justify-between ${
+                theme === 'dark' ? 'text-slate-300 hover:text-blue-400' : 'text-slate-600 hover:text-[#1769D2]'
+              }`}
             >
               <span>{t.navCareers}</span>
-              <span className="text-slate-400 text-xs">→</span>
+              <span className={theme === 'dark' ? 'text-slate-500 text-xs' : 'text-slate-400 text-xs'}>→</span>
             </button>
             <button
               onClick={() => handleNavClick('faq')}
-              className="w-full text-left py-3 px-2 text-sm text-slate-600 hover:text-[#1769D2] flex justify-between"
+              className={`w-full text-left py-3 px-2 text-sm flex justify-between ${
+                theme === 'dark' ? 'text-slate-300 hover:text-blue-400' : 'text-slate-600 hover:text-[#1769D2]'
+              }`}
             >
               <span>{t.navFaq}</span>
-              <span className="text-slate-400 text-xs">→</span>
+              <span className={theme === 'dark' ? 'text-slate-500 text-xs' : 'text-slate-400 text-xs'}>→</span>
             </button>
             <button
               onClick={() => handleNavClick('testimonials')}
-              className="w-full text-left py-3 px-2 text-sm text-slate-600 hover:text-[#1769D2] flex justify-between"
+              className={`w-full text-left py-3 px-2 text-sm flex justify-between ${
+                theme === 'dark' ? 'text-slate-300 hover:text-blue-400' : 'text-slate-600 hover:text-[#1769D2]'
+              }`}
             >
               <span>{t.navTestimonials}</span>
-              <span className="text-slate-400 text-xs">→</span>
+              <span className={theme === 'dark' ? 'text-slate-500 text-xs' : 'text-slate-400 text-xs'}>→</span>
             </button>
           </div>
 

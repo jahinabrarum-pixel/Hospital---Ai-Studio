@@ -12,7 +12,7 @@ import {
   Send, 
   ChevronRight, 
   Ambulance, 
-  ExternalLink 
+  ExternalLink
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {

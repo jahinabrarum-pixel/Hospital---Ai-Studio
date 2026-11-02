@@ -1,4 +1,5 @@
 export type Language = 'en' | 'bn';
+export type Theme = 'light' | 'dark';
 
 export type PageRoute = 
   | 'home'

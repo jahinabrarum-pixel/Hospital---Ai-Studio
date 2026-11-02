@@ -6,7 +6,9 @@ import {
   formatBdCurrency,
   toBengaliNumber,
   generateAppointmentRef,
-  filterDoctors
+  filterDoctors,
+  getOppositeTheme,
+  getThemeLabel
 } from './hospitalLogic';
 import { Doctor } from '../types';
 
@@ -124,4 +126,16 @@ test('filterDoctors correctly filters by department and query', () => {
   const searchByName = filterDoctors(sampleDoctors, { query: 'Nusrat' });
   assert.equal(searchByName.length, 1);
   assert.equal(searchByName[0].id, 'doc-2');
+});
+
+test('getOppositeTheme switches between light and dark cleanly', () => {
+  assert.equal(getOppositeTheme('light'), 'dark');
+  assert.equal(getOppositeTheme('dark'), 'light');
+});
+
+test('getThemeLabel returns accurate bilingual strings', () => {
+  assert.equal(getThemeLabel('light', 'en'), 'Standard Light Mode');
+  assert.equal(getThemeLabel('dark', 'en'), 'High-Contrast Dark Mode');
+  assert.equal(getThemeLabel('light', 'bn'), 'স্ট্যান্ডার্ড লাইট মোড');
+  assert.equal(getThemeLabel('dark', 'bn'), 'হাই-কন্ট্রাস্ট ডার্ক মোড');
 });

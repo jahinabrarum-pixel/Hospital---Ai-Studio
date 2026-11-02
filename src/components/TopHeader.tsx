@@ -24,7 +24,7 @@ export const TopHeader: React.FC = () => {
         </div>
 
         {/* Right side: Emergency Hotline & Ambulance */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => navigateTo('emergency')}
             className="flex items-center gap-1.5 text-rose-300 hover:text-white transition-colors cursor-pointer"

@@ -6,6 +6,8 @@ import { Footer } from './components/Footer';
 import { AppointmentModal } from './components/AppointmentModal';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { Toast } from './components/Toast';
+import { LiveChatWidget } from './components/LiveChatWidget';
+import { NavigationLoadingBar } from './components/NavigationLoadingBar';
 
 // All 22 Pages
 import { HomePage } from './pages/HomePage';
@@ -34,7 +36,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { ArrowUp, PhoneCall, Ambulance } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { currentPage, language, navigateTo } = useHospital();
+  const { currentPage, language, navigateTo, theme } = useHospital();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
@@ -78,8 +80,13 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#F5F8FC] text-[#26374A] ${language === 'bn' ? 'font-bangla' : 'font-sans'}`}>
+    <div className={`min-h-screen flex flex-col transition-colors duration-200 ${
+      theme === 'dark' ? 'bg-[#0B1329] text-[#F8FAFC]' : 'bg-[#F5F8FC] text-[#26374A]'
+    } ${language === 'bn' ? 'font-bangla' : 'font-sans'}`}>
       
+      {/* 0. Global Navigation Progress Indicator (Visual feedback on page changes) */}
+      <NavigationLoadingBar />
+
       {/* 1. Global Top Header */}
       <TopHeader />
 
@@ -98,6 +105,7 @@ const AppContent: React.FC = () => {
       <AppointmentModal />
       <GlobalSearchModal />
       <Toast />
+      <LiveChatWidget />
 
       {/* Floating Action Buttons: Emergency Quick Dial & Back To Top */}
       <div className="fixed bottom-6 left-6 z-30 flex items-center gap-2">
@@ -116,7 +124,11 @@ const AppContent: React.FC = () => {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-30 p-3 bg-white text-slate-700 hover:text-[#1769D2] hover:bg-blue-50 border border-slate-200 rounded-full shadow-lg hover:scale-105 transition-all cursor-pointer animate-in fade-in"
+          className={`fixed bottom-22 right-6 z-30 p-3 rounded-full shadow-lg hover:scale-105 transition-all cursor-pointer animate-in fade-in ${
+            theme === 'dark'
+              ? 'bg-[#142036] text-slate-200 hover:text-blue-400 hover:bg-[#1E3152] border border-[#243552]'
+              : 'bg-white text-slate-700 hover:text-[#1769D2] hover:bg-blue-50 border border-slate-200'
+          }`}
           title="Scroll to Top"
           aria-label="Back to top"
         >

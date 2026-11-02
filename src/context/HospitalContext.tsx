@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Language, PageRoute, AppointmentBooking, Doctor, Department } from '../types';
+import { Language, Theme, PageRoute, AppointmentBooking, Doctor, Department } from '../types';
 import { doctorsData, departmentsData } from '../data/hospitalData';
 import { getTranslation } from '../data/translations';
 
@@ -13,6 +13,9 @@ interface HospitalContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
   t: ReturnType<typeof getTranslation>;
   currentPage: PageRoute;
   selectedDoctorId: string | null;
@@ -123,7 +126,44 @@ export const HospitalProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [language]);
 
-  // 2. Routing state
+  // 2. Theme state with localStorage persistence & high-contrast dark mode
+  const [theme, setThemeState] = useState<Theme>(() => {
+    try {
+      const saved = localStorage.getItem('dmh_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  const setTheme = (t: Theme) => {
+    setThemeState(t);
+    try {
+      localStorage.setItem('dmh_theme', t);
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
+      root.style.colorScheme = 'dark';
+    } else {
+      root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
+      root.style.colorScheme = 'light';
+    }
+  }, [theme]);
+
+  // 3. Routing state
   const initialRoute = parseUrlToRoute();
   const [currentPage, setCurrentPage] = useState<PageRoute>(initialRoute.page);
   const [selectedDoctorId, setSelectedDoctorId] = useState<string | null>(initialRoute.id || null);
@@ -240,6 +280,9 @@ export const HospitalProvider: React.FC<{ children: ReactNode }> = ({ children }
         language,
         setLanguage,
         toggleLanguage,
+        theme,
+        setTheme,
+        toggleTheme,
         t,
         currentPage,
         selectedDoctorId,

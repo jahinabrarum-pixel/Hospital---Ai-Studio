@@ -48,6 +48,11 @@ export const translations = {
     apply: 'Apply',
     allDepartments: 'All Departments',
     allCategories: 'All Categories',
+    themeToggle: 'Toggle Theme',
+    themeLight: 'Switch to Light Mode',
+    themeDark: 'Switch to High-Contrast Dark Mode',
+    themeActiveLight: 'Light Mode Active',
+    themeActiveDark: 'Dark Mode Active',
     
     // Hero & Stats
     statPatients: '120,000+',
@@ -213,6 +218,11 @@ export const translations = {
     apply: 'প্রয়োগ করুন',
     allDepartments: 'সকল বিভাগ',
     allCategories: 'সকল ক্যাটাগরি',
+    themeToggle: 'থিম পরিবর্তন',
+    themeLight: 'লাইট মোড চালু করুন',
+    themeDark: 'হাই-কন্ট্রাস্ট ডার্ক মোড চালু করুন',
+    themeActiveLight: 'লাইট মোড সক্রিয়',
+    themeActiveDark: 'ডার্ক মোড সক্রিয়',
 
     // Hero & Stats
     statPatients: '১,২০,০০০+',
